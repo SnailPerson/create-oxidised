@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -90,6 +91,14 @@ public final class OxidationManager {
         if (state.getValue(OxidationProperties.WAXED)) {
             level.setBlock(pos, state.setValue(OxidationProperties.WAXED, false), Block.UPDATE_ALL);
             level.levelEvent(3004, pos, 0);
+            level.playSound(
+                null,
+                pos,
+                scrapeSound(ScrapeResult.WAX_REMOVED),
+                SoundSource.BLOCKS,
+                1.0F,
+                1.0F
+            );
             return ScrapeResult.WAX_REMOVED;
         }
         OxidationStage stage = state.getValue(OxidationProperties.STAGE);
@@ -98,6 +107,14 @@ public final class OxidationManager {
         }
         setStage(level, pos, state, stage.previous());
         level.levelEvent(3005, pos, 0);
+        level.playSound(
+            null,
+            pos,
+            scrapeSound(ScrapeResult.SCRAPED),
+            SoundSource.BLOCKS,
+            1.0F,
+            1.0F
+        );
         return ScrapeResult.SCRAPED;
     }
 
