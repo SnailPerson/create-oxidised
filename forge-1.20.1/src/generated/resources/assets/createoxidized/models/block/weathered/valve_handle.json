@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/valve_handle",
+  "textures": {
+    "3": "createoxidized:block/weathered/valve_handle/valve_handle_copper",
+    "particle": "createoxidized:block/weathered/valve_handle/valve_handle_copper"
+  }
+}

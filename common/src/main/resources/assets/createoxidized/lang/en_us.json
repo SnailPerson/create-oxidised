@@ -1,0 +1,13 @@
+{
+  "createoxidized.config.oxidationEnabled": "Enable oxidation",
+  "createoxidized.config.oxidationSpeedFactor": "Oxidation speed factor",
+  "itemGroup.createoxidized": "Create: Oxidized",
+  "item.createoxidized.variant.exposed": "Exposed %s",
+  "item.createoxidized.variant.weathered": "Weathered %s",
+  "item.createoxidized.variant.oxidized": "Oxidized %s",
+  "item.createoxidized.variant.waxed.unaffected": "Waxed %s",
+  "item.createoxidized.variant.waxed.exposed": "Waxed Exposed %s",
+  "item.createoxidized.variant.waxed.weathered": "Waxed Weathered %s",
+  "item.createoxidized.variant.waxed.oxidized": "Waxed Oxidized %s"
+}
+

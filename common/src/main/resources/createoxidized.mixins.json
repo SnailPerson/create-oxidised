@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.mrmulle.createoxidized.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BlockMixin",
+    "BlockItemMixin",
+    "BlockStateBaseMixin",
+    "LightningBoltMixin",
+    "StateDefinitionBuilderMixin"
+  ],
+  "client": [
+    "client.FluidTankRendererMixin",
+    "client.FluidValveRendererMixin",
+    "client.FluidValveVisualMixin",
+    "client.PortableStorageInterfaceRendererMixin",
+    "client.ValveHandleVisualMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+

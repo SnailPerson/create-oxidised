@@ -1,0 +1,11 @@
+plugins {
+    id 'base'
+}
+
+group = 'dev.mrmulle.createoxidized'
+version = '1.0.0'
+
+tasks.named('build') {
+    dependsOn ':forge-1.20.1:build', ':neoforge-1.21.1:build'
+}
+
