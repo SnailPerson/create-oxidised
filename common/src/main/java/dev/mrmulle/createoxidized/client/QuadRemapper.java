@@ -101,11 +101,18 @@ public final class QuadRemapper {
 
     private static BakedQuad remapQuad(BakedQuad quad, ResourceLocation source, OxidationStage stage) {
         String path = source.getPath();
+        String textureRoot;
         if (path.startsWith("block/")) {
             path = path.substring("block/".length());
+            textureRoot = "block/";
+        } else if (path.startsWith("item/")) {
+            path = path.substring("item/".length());
+            textureRoot = "item/";
+        } else {
+            return quad;
         }
         ResourceLocation targetLocation = ResourceLocation.tryParse(
-            "createoxidized:block/" + stage.getSerializedName() + "/" + path
+            "createoxidized:" + textureRoot + stage.getSerializedName() + "/" + path
         );
         TextureAtlasSprite target = Minecraft.getInstance()
             .getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)

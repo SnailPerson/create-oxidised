@@ -22,12 +22,13 @@ public final class CreativeTabContent {
             }
 
             if (CreateOxidizedCommon.clutterReducer3000()) {
-                output.accept(new ItemStack(block));
                 continue;
             }
 
             for (OxidationStage stage : OxidationStage.values()) {
-                add(output, block, stage, false);
+                if (stage != OxidationStage.UNAFFECTED) {
+                    add(output, block, stage, false);
+                }
                 add(output, block, stage, true);
             }
         }

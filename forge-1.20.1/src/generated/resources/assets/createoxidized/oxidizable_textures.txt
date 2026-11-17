@@ -43,4 +43,5 @@ create:block/spout_nozzle
 create:block/table_cloth/copper
 create:block/valve_closed
 create:block/valve_handle/valve_handle_copper
+create:item/copper_door
 create:block/valve_open
