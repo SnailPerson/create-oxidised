@@ -44,8 +44,10 @@ public final class NeoForgeClientEvents {
     @SubscribeEvent
     public static void modifyBakedModels(ModelEvent.ModifyBakingResult event) {
         event.getModels().replaceAll((location, model) -> {
-            if (!location.id().getNamespace().equals("create")
-                || !OxidationProperties.BLOCK_IDS.contains(location.id().getPath())) {
+            if (!OxidationProperties.isSupportedBlockId(
+                location.id().getNamespace(),
+                location.id().getPath()
+            )) {
                 return model;
             }
             return model instanceof OxidizedModel ? model : new OxidizedModel(model);

@@ -29,8 +29,14 @@ dependencies {
     modCompileOnly 'dev.engine-room.flywheel:flywheel-forge-api-1.20.1:1.0.5'
     modRuntimeOnly 'dev.engine-room.flywheel:flywheel-forge-1.20.1:1.0.5'
     modImplementation 'com.tterrag.registrate:Registrate:MC1.20-1.3.3'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly annotationProcessor('io.github.llamalad7:mixinextras-common:0.4.1')
     implementation 'io.github.llamalad7:mixinextras-forge:0.4.1'
+}
+
+mixin {
+    add sourceSets.main, 'createoxidized.refmap.json'
+    config 'createoxidized.mixins.json'
 }
 
 legacyForge {
@@ -59,6 +65,16 @@ legacyForge {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = 17
+}
+
+processResources {
+    filesMatching('createoxidized.mixins.json') {
+        filter { line ->
+            line.contains('"minVersion"')
+                ? '  "refmap": "createoxidized.refmap.json",\n' + line
+                : line
+        }
+    }
 }
 
 jar {

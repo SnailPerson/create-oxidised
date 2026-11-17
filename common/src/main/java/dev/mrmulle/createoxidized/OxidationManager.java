@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public final class OxidationManager {
     private static final double VANILLA_ATTEMPT_CHANCE = 0.05688889D;
+    private static final int IN_PLACE_UPDATE = Block.UPDATE_ALL | Block.UPDATE_MOVE_BY_PISTON;
 
     private OxidationManager() {
     }
@@ -75,12 +76,31 @@ public final class OxidationManager {
     }
 
     public static boolean wax(Level level, BlockPos pos, BlockState state) {
+        return wax(level, pos, state, true);
+    }
+
+    public static boolean wax(Level level, BlockPos pos, BlockState state, boolean playEffect) {
         if (!CreateOxidizedCommon.enabled() || !OxidationProperties.isOxidizable(state)
             || state.getValue(OxidationProperties.WAXED)) {
             return false;
         }
-        level.setBlock(pos, state.setValue(OxidationProperties.WAXED, true), Block.UPDATE_ALL);
-        level.levelEvent(3003, pos, 0);
+        setState(level, pos, state.setValue(OxidationProperties.WAXED, true));
+        if (playEffect) {
+            level.levelEvent(3003, pos, 0);
+        }
+        return true;
+    }
+
+    public static boolean oxidize(Level level, BlockPos pos, BlockState state) {
+        if (!CreateOxidizedCommon.enabled() || !OxidationProperties.isOxidizable(state)
+            || state.getValue(OxidationProperties.WAXED)) {
+            return false;
+        }
+        OxidationStage stage = state.getValue(OxidationProperties.STAGE);
+        if (stage == OxidationStage.OXIDIZED) {
+            return false;
+        }
+        setStage(level, pos, state, stage.next());
         return true;
     }
 
@@ -89,7 +109,7 @@ public final class OxidationManager {
             return ScrapeResult.NONE;
         }
         if (state.getValue(OxidationProperties.WAXED)) {
-            level.setBlock(pos, state.setValue(OxidationProperties.WAXED, false), Block.UPDATE_ALL);
+            setState(level, pos, state.setValue(OxidationProperties.WAXED, false));
             level.levelEvent(3004, pos, 0);
             level.playSound(
                 null,
@@ -155,7 +175,7 @@ public final class OxidationManager {
     private static boolean fullyDeoxidize(Level level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
         if (OxidationProperties.isOxidizable(state) && !state.getValue(OxidationProperties.WAXED)) {
-            level.setBlock(pos, state.setValue(OxidationProperties.STAGE, OxidationStage.UNAFFECTED), Block.UPDATE_ALL);
+            setState(level, pos, state.setValue(OxidationProperties.STAGE, OxidationStage.UNAFFECTED));
             return true;
         }
         return false;
@@ -178,7 +198,11 @@ public final class OxidationManager {
     }
 
     private static void setStage(Level level, BlockPos pos, BlockState state, OxidationStage stage) {
-        level.setBlock(pos, state.setValue(OxidationProperties.STAGE, stage), Block.UPDATE_ALL);
+        setState(level, pos, state.setValue(OxidationProperties.STAGE, stage));
+    }
+
+    private static void setState(Level level, BlockPos pos, BlockState state) {
+        level.setBlock(pos, state, IN_PLACE_UPDATE);
     }
 
     public enum ScrapeResult {

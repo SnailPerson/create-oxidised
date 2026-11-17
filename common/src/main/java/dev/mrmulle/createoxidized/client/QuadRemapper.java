@@ -111,8 +111,11 @@ public final class QuadRemapper {
         } else {
             return quad;
         }
+        String namespacePath = source.getNamespace().equals("create")
+            ? ""
+            : "compat/" + source.getNamespace() + "/";
         ResourceLocation targetLocation = ResourceLocation.tryParse(
-            "createoxidized:" + textureRoot + stage.getSerializedName() + "/" + path
+            "createoxidized:" + textureRoot + stage.getSerializedName() + "/" + namespacePath + path
         );
         TextureAtlasSprite target = Minecraft.getInstance()
             .getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)

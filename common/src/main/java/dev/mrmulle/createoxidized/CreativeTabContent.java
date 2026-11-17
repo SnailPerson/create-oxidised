@@ -11,13 +11,13 @@ public final class CreativeTabContent {
     }
 
     public static ItemStack icon() {
-        return new ItemStack(block("copper_casing"));
+        return new ItemStack(block("create:copper_casing"));
     }
 
     public static void populate(CreativeModeTab.Output output) {
         for (String id : OxidationProperties.ORDERED_BLOCK_IDS) {
             Block block = block(id);
-            if (block.asItem().getDefaultInstance().isEmpty()) {
+            if (block == null || block.asItem().getDefaultInstance().isEmpty()) {
                 continue;
             }
 
@@ -45,9 +45,11 @@ public final class CreativeTabContent {
         output.accept(stack);
     }
 
-    private static Block block(String path) {
-        return BuiltInRegistries.BLOCK.get(
-            ResourceLocation.tryParse("create:" + path)
-        );
+    private static Block block(String id) {
+        ResourceLocation location = ResourceLocation.tryParse(id);
+        if (location == null || !BuiltInRegistries.BLOCK.containsKey(location)) {
+            return null;
+        }
+        return BuiltInRegistries.BLOCK.get(location);
     }
 }

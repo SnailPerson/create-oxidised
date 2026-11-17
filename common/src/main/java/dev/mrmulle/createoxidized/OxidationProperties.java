@@ -22,25 +22,65 @@ public final class OxidationProperties {
     );
 
     public static final List<String> ORDERED_BLOCK_IDS = List.of(
-        "copper_casing",
-        "fluid_pipe",
-        "encased_fluid_pipe",
-        "glass_fluid_pipe",
-        "mechanical_pump",
-        "smart_fluid_pipe",
-        "fluid_valve",
-        "copper_valve_handle",
-        "fluid_tank",
-        "hose_pulley",
-        "item_drain",
-        "spout",
-        "portable_fluid_interface",
-        "steam_engine",
-        "copper_ladder",
-        "copper_bars",
-        "copper_scaffolding",
-        "copper_door",
-        "copper_table_cloth"
+        "create:copper_casing",
+        "create:fluid_pipe",
+        "create:encased_fluid_pipe",
+        "create:glass_fluid_pipe",
+        "create:mechanical_pump",
+        "create:smart_fluid_pipe",
+        "create:fluid_valve",
+        "create:copper_valve_handle",
+        "create:fluid_tank",
+        "create:hose_pulley",
+        "create:item_drain",
+        "create:spout",
+        "create:portable_fluid_interface",
+        "create:steam_engine",
+        "create:copper_ladder",
+        "create:copper_bars",
+        "create:copper_scaffolding",
+        "create:copper_door",
+        "create:copper_table_cloth",
+        "createdeco:blue_copper_lamp",
+        "createdeco:copper_bars",
+        "createdeco:copper_bars_overlay",
+        "createdeco:copper_catwalk",
+        "createdeco:copper_catwalk_railing",
+        "createdeco:copper_catwalk_stairs",
+        "createdeco:copper_coinstack",
+        "createdeco:copper_hull",
+        "createdeco:copper_mesh_fence",
+        "createdeco:copper_sheet_metal",
+        "createdeco:copper_support",
+        "createdeco:copper_support_wedge",
+        "createdeco:copper_window",
+        "createdeco:copper_window_pane",
+        "createdeco:green_copper_lamp",
+        "createdeco:locked_copper_door",
+        "createdeco:red_copper_lamp",
+        "createdeco:yellow_copper_lamp",
+        "createdieselgenerators:burner",
+        "createdieselgenerators:chemical_turret",
+        "createdieselgenerators:diesel_engine",
+        "createdieselgenerators:distillation_tank",
+        "createdieselgenerators:pumpjack_hole",
+        "createdieselgenerators:white_concrete_encased_fluid_pipe",
+        "createdieselgenerators:orange_concrete_encased_fluid_pipe",
+        "createdieselgenerators:magenta_concrete_encased_fluid_pipe",
+        "createdieselgenerators:light_blue_concrete_encased_fluid_pipe",
+        "createdieselgenerators:yellow_concrete_encased_fluid_pipe",
+        "createdieselgenerators:lime_concrete_encased_fluid_pipe",
+        "createdieselgenerators:pink_concrete_encased_fluid_pipe",
+        "createdieselgenerators:gray_concrete_encased_fluid_pipe",
+        "createdieselgenerators:light_gray_concrete_encased_fluid_pipe",
+        "createdieselgenerators:cyan_concrete_encased_fluid_pipe",
+        "createdieselgenerators:purple_concrete_encased_fluid_pipe",
+        "createdieselgenerators:blue_concrete_encased_fluid_pipe",
+        "createdieselgenerators:brown_concrete_encased_fluid_pipe",
+        "createdieselgenerators:green_concrete_encased_fluid_pipe",
+        "createdieselgenerators:red_concrete_encased_fluid_pipe",
+        "createdieselgenerators:black_concrete_encased_fluid_pipe",
+        "create_connected:fluid_vessel"
     );
     public static final Set<String> BLOCK_IDS = Set.copyOf(ORDERED_BLOCK_IDS);
 
@@ -63,7 +103,27 @@ public final class OxidationProperties {
         "net.minecraft.world.level.block.IronBarsBlock",
         "com.simibubi.create.content.decoration.MetalScaffoldingBlock",
         "com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock",
-        "com.simibubi.create.content.logistics.tableCloth.TableClothBlock"
+        "com.simibubi.create.content.logistics.tableCloth.TableClothBlock",
+        "com.simibubi.create.content.decoration.palettes.WindowBlock",
+        "com.simibubi.create.content.decoration.palettes.ConnectedGlassPaneBlock",
+        "com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock",
+        "net.minecraft.world.level.block.DoorBlock",
+        "com.github.talrey.createdeco.blocks.CageLampBlock",
+        "com.github.talrey.createdeco.blocks.CatwalkBlock",
+        "com.github.talrey.createdeco.blocks.CatwalkRailingBlock",
+        "com.github.talrey.createdeco.blocks.CatwalkStairBlock",
+        "com.github.talrey.createdeco.blocks.CoinStackBlock",
+        "com.github.talrey.createdeco.blocks.HullBlock",
+        "com.github.talrey.createdeco.blocks.MeshFenceBlock",
+        "com.github.talrey.createdeco.blocks.SupportBlock",
+        "com.github.talrey.createdeco.blocks.SupportWedgeBlock",
+        "com.jesz.createdieselgenerators.content.burner.BurnerBlock",
+        "com.jesz.createdieselgenerators.content.turret.ChemicalTurretBlock",
+        "com.jesz.createdieselgenerators.content.diesel_engine.normal.DieselEngineBlock",
+        "com.jesz.createdieselgenerators.content.distillation.DistillationTankBlock",
+        "com.jesz.createdieselgenerators.content.pumpjack.PumpjackHoleBlock",
+        "com.jesz.createdieselgenerators.content.concrete.ConcreteEncasedFluidPipeBlock",
+        "com.hlysine.create_connected.content.fluidvessel.FluidVesselBlock"
     );
 
     private OxidationProperties() {
@@ -83,6 +143,10 @@ public final class OxidationProperties {
 
     public static boolean hasProperties(BlockState state) {
         return state.hasProperty(STAGE) && state.hasProperty(WAXED);
+    }
+
+    public static boolean isSupportedBlockId(String namespace, String path) {
+        return BLOCK_IDS.contains(namespace + ":" + path);
     }
 
     public static boolean isOxidizable(BlockState state) {
