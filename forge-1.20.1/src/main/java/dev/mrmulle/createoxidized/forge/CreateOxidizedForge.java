@@ -28,6 +28,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public final class CreateOxidizedForge {
     @SuppressWarnings("removal")
     public CreateOxidizedForge() {
+        // loader entrypoint, all the actual oxidation rules live in common
         OxidationItemData.install(new ForgeItemDataAdapter());
         ForgeCreativeTab.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.SPEC);
@@ -43,6 +44,7 @@ public final class CreateOxidizedForge {
     private void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         ItemStack stack = event.getItemStack();
         BlockState state = event.getLevel().getBlockState(event.getPos());
+        // sprays go first since they arent axes or honeycomb and have their own durability
         Treatment treatment = WaxedUpCompat.treatment(stack);
         if (treatment != Treatment.NONE && WaxedUpCompat.canTreat(state, treatment)) {
             if (!event.getLevel().isClientSide
@@ -104,6 +106,7 @@ public final class CreateOxidizedForge {
             return;
         }
 
+        // catches Create placement arrows which skip the normal BlockItem mixin
         OxidationItemData.restoreFromHeldItem(
             player,
             level,
@@ -111,6 +114,7 @@ public final class CreateOxidizedForge {
             event.getPlacedBlock()
         );
 
+        // waxed up also supports spraying a block while its being placed
         ItemStack stack = player.getOffhandItem();
         Treatment treatment = WaxedUpCompat.treatment(stack);
         BlockState placedState = level.getBlockState(event.getPos());

@@ -9,6 +9,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 
 final class ForgeCreativeTab {
+    // only registration is loader specific, the item list is shared
     private static final DeferredRegister<CreativeModeTab> TABS =
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CreateOxidizedCommon.MOD_ID);
 

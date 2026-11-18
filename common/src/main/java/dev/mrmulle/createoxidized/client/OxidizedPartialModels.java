@@ -9,17 +9,14 @@ import dev.mrmulle.createoxidized.OxidationStage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * Oxidized replacements for Create parts that are rendered separately from the
- * block model (gauges, valve pointers, and portable interface moving pieces).
- */
+// moving gauges pointers etc arent in the main block model so they need their own versions
 public final class OxidizedPartialModels {
     private static final Map<OxidationStage, Map<Part, PartialModel>> MODELS = createModels();
 
     private OxidizedPartialModels() {
     }
 
-    /** Forces this class to load before Flywheel collects its partial models. */
+    // makes sure these exist before flywheel gathers all its partial models
     public static void init() {
     }
 
@@ -32,6 +29,7 @@ public final class OxidizedPartialModels {
     }
 
     private static Map<OxidationStage, Map<Part, PartialModel>> createModels() {
+        // these json models point at the same generated stage textures as normal blocks
         Map<OxidationStage, Map<Part, PartialModel>> result = new EnumMap<>(OxidationStage.class);
         for (OxidationStage stage : OxidationStage.values()) {
             if (stage == OxidationStage.UNAFFECTED) {

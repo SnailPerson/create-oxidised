@@ -17,6 +17,7 @@ public final class CreativeTabContent {
     }
 
     public static void populate(CreativeModeTab.Output output) {
+        // missing addon ids just get skipped here so all compat can stay optional
         for (String id : OxidationProperties.ORDERED_BLOCK_IDS) {
             Block block = block(id);
             if (block == null || block.asItem().getDefaultInstance().isEmpty()) {
@@ -28,6 +29,7 @@ public final class CreativeTabContent {
             }
 
             for (OxidationStage stage : OxidationStage.values()) {
+                // the normal clean item already belongs to Create, no point adding it twice
                 if (stage != OxidationStage.UNAFFECTED) {
                     add(output, block, stage, false);
                 }

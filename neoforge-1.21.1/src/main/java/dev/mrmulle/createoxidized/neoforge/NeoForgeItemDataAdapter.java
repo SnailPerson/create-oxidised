@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 
 final class NeoForgeItemDataAdapter implements OxidationItemData.Adapter {
+    // 1.21 moved item nbt into data components but the contents stay the same
     private static final String STAGE_KEY = "CreateOxidizedStage";
     private static final String WAXED_KEY = "CreateOxidizedWaxed";
 
@@ -33,6 +34,7 @@ final class NeoForgeItemDataAdapter implements OxidationItemData.Adapter {
 
     @Override
     public void write(ItemStack stack, StoredState state) {
+        // grab the Create name before adding our stage prefix to it
         Component baseName = stack.getHoverName();
         CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> {
             tag.putString(STAGE_KEY, state.stage().getSerializedName());

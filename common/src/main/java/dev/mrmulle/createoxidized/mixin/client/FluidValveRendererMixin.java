@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 
 @Mixin(targets = "com.simibubi.create.content.fluids.pipes.valve.FluidValveRenderer", remap = false)
 abstract class FluidValveRendererMixin {
+    // fallback renderer used when flywheel isnt drawing the valve
     @Redirect(
         method = "renderSafe(Lcom/simibubi/create/content/fluids/pipes/valve/FluidValveBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
         at = @At(

@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 final class ForgeItemDataAdapter implements OxidationItemData.Adapter {
+    // 1.20 still keeps our little bit of state in the items regular nbt
     private static final String STAGE_KEY = "CreateOxidizedStage";
     private static final String WAXED_KEY = "CreateOxidizedWaxed";
 
@@ -27,6 +28,7 @@ final class ForgeItemDataAdapter implements OxidationItemData.Adapter {
 
     @Override
     public void write(ItemStack stack, StoredState state) {
+        // grab the Create name before adding our stage prefix to it
         Component baseName = stack.getHoverName();
         CompoundTag tag = stack.getOrCreateTag();
         tag.putString(STAGE_KEY, state.stage().getSerializedName());

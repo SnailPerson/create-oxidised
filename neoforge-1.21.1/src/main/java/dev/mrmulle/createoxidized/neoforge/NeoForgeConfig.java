@@ -9,6 +9,7 @@ public final class NeoForgeConfig {
     public static final ModConfigSpec.BooleanValue CLUTTER_REDUCER_3000;
 
     static {
+        // keep names the same as forge so configs are easy to move between versions
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         builder.push("oxidation");
         OXIDATION_ENABLED = builder

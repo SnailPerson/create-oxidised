@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 final class NeoForgeCreativeTab {
+    // only registration is loader specific, the item list is shared
     private static final DeferredRegister<CreativeModeTab> TABS =
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CreateOxidizedCommon.MOD_ID);
 

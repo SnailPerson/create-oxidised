@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LightningBolt.class)
 public abstract class LightningBoltMixin {
+    // run after vanilla has cleaned its copper so both systems follow the same strike
     @Inject(method = "clearCopperOnLightningStrike", at = @At("TAIL"))
     private static void createoxidized$cleanCreateCopper(Level level, BlockPos pos, CallbackInfo callback) {
         OxidationManager.lightningStrike(level, pos);

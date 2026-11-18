@@ -20,6 +20,7 @@ public enum OxidationStage implements StringRepresentable {
     }
 
     public OxidationStage next() {
+        // clamp at each end so callers dont need special cases everywhere
         return values()[Math.min(ordinal() + 1, values().length - 1)];
     }
 

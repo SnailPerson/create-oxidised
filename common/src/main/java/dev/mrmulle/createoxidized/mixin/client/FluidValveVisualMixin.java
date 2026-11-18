@@ -13,6 +13,7 @@ import dev.mrmulle.createoxidized.client.OxidizedPartialModels.Part;
 
 @Mixin(targets = "com.simibubi.create.content.fluids.pipes.valve.FluidValveVisual", remap = false)
 abstract class FluidValveVisualMixin {
+    // flywheels fast render path needs the same pointer swap as the normal renderer
     @Redirect(
         method = "<init>",
         at = @At(

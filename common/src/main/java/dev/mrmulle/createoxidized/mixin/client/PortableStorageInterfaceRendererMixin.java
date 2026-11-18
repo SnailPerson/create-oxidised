@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(targets = "com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceRenderer", remap = false)
 abstract class PortableStorageInterfaceRendererMixin {
+    // Create chooses these moving pieces in helper methods so swap the returned partial
     @Inject(method = "getTopForState", at = @At("RETURN"), cancellable = true)
     private static void createoxidized$oxidizeTop(
         BlockState state,

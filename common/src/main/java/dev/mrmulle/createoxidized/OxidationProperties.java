@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public final class OxidationProperties {
+    // added onto supported blocks by StateDefinitionBuilderMixin
     public static final EnumProperty<OxidationStage> STAGE =
         EnumProperty.create("createoxidized_stage", OxidationStage.class);
     public static final BooleanProperty WAXED = BooleanProperty.create("createoxidized_waxed");
@@ -21,6 +22,7 @@ public final class OxidationProperties {
         ResourceLocation.tryParse(CreateOxidizedCommon.MOD_ID + ":oxidizable_create_blocks")
     );
 
+    // also controls the order in our creative tab, addon ids are fine even when absent
     public static final List<String> ORDERED_BLOCK_IDS = List.of(
         "create:copper_casing",
         "create:fluid_pipe",
@@ -97,6 +99,7 @@ public final class OxidationProperties {
     );
     public static final Set<String> BLOCK_IDS = Set.copyOf(ORDERED_BLOCK_IDS);
 
+    // moving bits have their own baked models seperate from the actual block
     private static final Set<String> EXTRA_MODEL_IDS = Set.of(
         "dndesires:block/fluid_gauge/needle",
         "dndesires:block/hydraulic_press/head",
@@ -105,6 +108,7 @@ public final class OxidationProperties {
         "dndesires:block/spud_sentry/gear"
     );
 
+    // strings are intentional, directly importing addon classes would make them required deps
     private static final Set<String> ELIGIBLE_CLASSES = Set.of(
         "com.simibubi.create.content.decoration.encasing.CasingBlock",
         "com.simibubi.create.content.fluids.pipes.FluidPipeBlock",
@@ -185,6 +189,7 @@ public final class OxidationProperties {
     }
 
     public static boolean isOxidizable(BlockState state) {
+        // the class check adds properties but the tag decides which blocks really use them
         return hasProperties(state) && state.is(OXIDIZABLE_BLOCKS);
     }
 }

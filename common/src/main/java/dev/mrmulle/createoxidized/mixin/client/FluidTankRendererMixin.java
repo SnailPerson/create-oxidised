@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 
 @Mixin(targets = "com.simibubi.create.content.fluids.tank.FluidTankRenderer", remap = false)
 abstract class FluidTankRendererMixin {
+    // the gauge is rendered later as a partial so the block model wrapper cant see it
     @Redirect(
         method = "renderAsBoiler",
         at = @At(

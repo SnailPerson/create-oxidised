@@ -13,7 +13,9 @@ import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class OxidationManager {
+    // same first roll vanilla copper uses before it checks the nearby blocks
     private static final double VANILLA_ATTEMPT_CHANCE = 0.05688889D;
+    // keeping the block in place matters for tanks and brackets attached to pipes
     private static final int IN_PLACE_UPDATE = Block.UPDATE_ALL | Block.UPDATE_MOVE_BY_PISTON;
 
     private OxidationManager() {
@@ -39,6 +41,7 @@ public final class OxidationManager {
         int sameAge = 0;
         int older = 0;
 
+        // this is basically WeatheringCopper logic but it also counts our addon blocks
         for (BlockPos nearby : BlockPos.withinManhattan(pos, 4, 4, 4)) {
             if (nearby.distManhattan(pos) > 4) {
                 break;
@@ -157,6 +160,7 @@ public final class OxidationManager {
             return;
         }
 
+        // vanilla lightning cleans a few short random walks instead of one giant area
         RandomSource random = level.random;
         int walks = random.nextInt(3) + 3;
         for (int walk = 0; walk < walks; walk++) {

@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class WaxedUpCompat {
+    // registry ids keep this compat safe when waxed up isnt installed
     private static final String WAXED_UP_NAMESPACE = "waxedup";
     private static final String COPPER_COATING = "copper_coating";
     private static final String OXIDISER = "oxidiser";
@@ -54,6 +55,7 @@ public final class WaxedUpCompat {
 
     public static void playSprayEffect(ItemStack stack, Level level, BlockPos pos, Treatment treatment) {
         Item item = stack.getItem();
+        // their effect method is optional too, reflection avoids linking their classes here
         try {
             item.getClass().getMethod("playEffect", Level.class, BlockPos.class).invoke(item, level, pos);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException exception) {

@@ -23,6 +23,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class QuadRemapper {
+    // baked vertices are just int arrays, uv happens to live in these two slots
     private static final int U_OFFSET = 4;
     private static final int V_OFFSET = 5;
     private static final Set<String> OXIDIZABLE_TEXTURES = loadTextureManifest();
@@ -49,6 +50,7 @@ public final class QuadRemapper {
             return quads;
         }
 
+        // models stay the same, only the sprite and its atlas coords get swapped
         List<BakedQuad> result = new ArrayList<>(quads.size());
         for (BakedQuad quad : quads) {
             Optional<ResourceLocation> source = SOURCE_CACHE.computeIfAbsent(
@@ -75,6 +77,7 @@ public final class QuadRemapper {
             && containsAllUvs(declared, quad.getVertices())) {
             return declared.contents().name();
         }
+        // connected models sometimes lie about their sprite after moving the uvs, so check the atlas
         for (ResourceLocation location : OXIDIZABLE_LOCATIONS) {
             TextureAtlasSprite candidate = Minecraft.getInstance()
                 .getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
@@ -155,6 +158,7 @@ public final class QuadRemapper {
     }
 
     private static Set<String> loadTextureManifest() {
+        // keeping this as a generated text file is much nicer than a 300 texture java list
         InputStream stream = QuadRemapper.class.getResourceAsStream(
             "/assets/createoxidized/oxidizable_textures.txt"
         );

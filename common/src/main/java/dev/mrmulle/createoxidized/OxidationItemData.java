@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class OxidationItemData {
+    // item data changed alot in 1.21, each loader installs the version it understands
     private static Adapter adapter = new Adapter() {
         @Override
         public Optional<StoredState> read(ItemStack stack) {
@@ -55,6 +56,7 @@ public final class OxidationItemData {
         BlockPos pos,
         BlockState placedState
     ) {
+        // Create placement helpers dont always go through BlockItem.place so the place event also calls this
         if (!OxidationProperties.isOxidizable(placedState)) {
             return false;
         }

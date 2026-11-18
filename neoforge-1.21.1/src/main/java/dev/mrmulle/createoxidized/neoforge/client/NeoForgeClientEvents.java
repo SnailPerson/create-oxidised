@@ -43,6 +43,7 @@ public final class NeoForgeClientEvents {
 
     @SubscribeEvent
     public static void modifyBakedModels(ModelEvent.ModifyBakingResult event) {
+        // wrap only known copper models, wrapping the whole registry would be very wasteful
         event.getModels().replaceAll((location, model) -> {
             if (!OxidationProperties.isSupportedModelId(
                 location.id().getNamespace(),
@@ -69,6 +70,7 @@ public final class NeoForgeClientEvents {
         private OxidizedModel(BakedModel delegate, OxidationStage forcedStage) {
             this.delegate = delegate;
             this.forcedStage = forcedStage;
+            // forced stage is used for an inventory stack where there is no blockstate
             this.overrides = forcedStage == null ? new OxidizedItemOverrides(delegate) : delegate.getOverrides();
         }
 

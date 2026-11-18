@@ -21,6 +21,7 @@ public abstract class StateDefinitionBuilderMixin<O, S extends StateHolder<O, S>
     private void createoxidized$addOxidationProperties(
         CallbackInfoReturnable<StateDefinition<O, S>> callback
     ) {
+        // doing it here avoids replacing every Create block with a custom subclass
         if (OxidationProperties.classCanCarryProperties(owner)) {
             ((StateDefinition.Builder) (Object) this).add(
                 OxidationProperties.STAGE,

@@ -20,6 +20,7 @@ public abstract class BlockStateBaseMixin {
     private void createoxidized$markActiveOxidationStatesRandomTicking(
         CallbackInfoReturnable<Boolean> callback
     ) {
+        // Create blocks normally dont random tick so opt in only while they can still age
         BlockState state = (BlockState) (Object) this;
         if (OxidationProperties.hasProperties(state)) {
             callback.setReturnValue(

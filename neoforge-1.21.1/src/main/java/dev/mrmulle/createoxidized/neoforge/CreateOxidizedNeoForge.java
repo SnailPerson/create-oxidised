@@ -27,6 +27,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 @Mod(CreateOxidizedCommon.MOD_ID)
 public final class CreateOxidizedNeoForge {
     public CreateOxidizedNeoForge(IEventBus modBus, ModContainer container) {
+        // loader entrypoint, all the actual oxidation rules live in common
         OxidationItemData.install(new NeoForgeItemDataAdapter());
         NeoForgeCreativeTab.register(modBus);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, NeoForgeConfig.SPEC);
@@ -42,6 +43,7 @@ public final class CreateOxidizedNeoForge {
     private void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         ItemStack stack = event.getItemStack();
         BlockState state = event.getLevel().getBlockState(event.getPos());
+        // sprays go first since they arent axes or honeycomb and have their own durability
         Treatment treatment = WaxedUpCompat.treatment(stack);
         if (treatment != Treatment.NONE && WaxedUpCompat.canTreat(state, treatment)) {
             if (!event.getLevel().isClientSide
@@ -103,6 +105,7 @@ public final class CreateOxidizedNeoForge {
             return;
         }
 
+        // catches Create placement arrows which skip the normal BlockItem mixin
         OxidationItemData.restoreFromHeldItem(
             player,
             level,
@@ -110,6 +113,7 @@ public final class CreateOxidizedNeoForge {
             event.getPlacedBlock()
         );
 
+        // waxed up also supports spraying a block while its being placed
         ItemStack stack = player.getOffhandItem();
         Treatment treatment = WaxedUpCompat.treatment(stack);
         BlockState placedState = level.getBlockState(event.getPos());

@@ -6,6 +6,7 @@ import java.util.function.DoubleSupplier;
 public final class CreateOxidizedCommon {
     public static final String MOD_ID = "createoxidized";
 
+    // common code cant read either loaders config directly so they plug these in on startup
     private static BooleanSupplier enabled = () -> true;
     private static DoubleSupplier speedFactor = () -> 1.0D;
     private static BooleanSupplier clutterReducer3000 = () -> false;
@@ -28,6 +29,7 @@ public final class CreateOxidizedCommon {
     }
 
     public static double speedFactor() {
+        // negative speed would do wierd things to the chance maths
         return Math.max(0.0D, speedFactor.getAsDouble());
     }
 

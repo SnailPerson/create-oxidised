@@ -27,6 +27,7 @@ public abstract class BlockMixin {
         argsOnly = true
     )
     private BlockState createoxidized$initializeOxidationDefaults(BlockState state) {
+        // minecraft wants every injected property to have a value in the default state
         if (!OxidationProperties.hasProperties(state)) {
             return state;
         }
@@ -48,6 +49,7 @@ public abstract class BlockMixin {
         ItemStack tool,
         CallbackInfoReturnable<List<ItemStack>> callback
     ) {
+        // with clutter reducer on drops stay as plain Create items on purpose
         if (CreateOxidizedCommon.clutterReducer3000()
             || !OxidationProperties.isOxidizable(state)) {
             return;

@@ -13,6 +13,7 @@ import dev.mrmulle.createoxidized.client.OxidizedPartialModels.Part;
 
 @Mixin(targets = "com.simibubi.create.content.kinetics.crank.ValveHandleVisual", remap = false)
 abstract class ValveHandleVisualMixin {
+    // valve handles are instanced by flywheel and never pass the normal baked block model
     @Redirect(
         method = "<init>",
         at = @At(

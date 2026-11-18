@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin {
+    // placement can nest a bit so dont leave the item state in a normal static field
     @Unique
     private static final ThreadLocal<StoredState> CREATEOXIDIZED_PLACEMENT =
         new ThreadLocal<>();
@@ -55,8 +56,10 @@ public abstract class BlockItemMixin {
             return;
         }
 
+        // regular block placement lands here, helper placement is covered by the loader event
         setStoredState(level, pos, placed, stored);
         if (placed.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF)) {
+            // doors need both halves changed or they render and drop wrong
             DoubleBlockHalf half = placed.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF);
             BlockPos otherPos = half == DoubleBlockHalf.LOWER ? pos.above() : pos.below();
             BlockState other = level.getBlockState(otherPos);
