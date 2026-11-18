@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -28,6 +29,8 @@ public final class QuadRemapper {
     private static final List<ResourceLocation> OXIDIZABLE_LOCATIONS = OXIDIZABLE_TEXTURES.stream()
         .map(ResourceLocation::tryParse)
         .toList();
+    private static final ConcurrentHashMap<BakedQuad, Optional<ResourceLocation>> SOURCE_CACHE =
+        new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<CacheKey, BakedQuad> CACHE = new ConcurrentHashMap<>();
 
     private QuadRemapper() {
@@ -48,25 +51,28 @@ public final class QuadRemapper {
 
         List<BakedQuad> result = new ArrayList<>(quads.size());
         for (BakedQuad quad : quads) {
-            ResourceLocation declaredSource = quad.getSprite().contents().name();
-            String sourceKey = declaredSource.getNamespace() + ":" + declaredSource.getPath();
-            if (!OXIDIZABLE_TEXTURES.contains(sourceKey)) {
+            Optional<ResourceLocation> source = SOURCE_CACHE.computeIfAbsent(
+                quad,
+                value -> Optional.ofNullable(actualSource(value))
+            );
+            if (source.isEmpty()) {
                 result.add(quad);
                 continue;
             }
-            ResourceLocation source = actualSource(quad);
-            if (source == null) {
-                result.add(quad);
-                continue;
-            }
-            result.add(CACHE.computeIfAbsent(new CacheKey(quad, stage), ignored -> remapQuad(quad, source, stage)));
+            result.add(CACHE.computeIfAbsent(
+                new CacheKey(quad, stage),
+                ignored -> remapQuad(quad, source.get(), stage)
+            ));
         }
         return result;
     }
 
     private static ResourceLocation actualSource(BakedQuad quad) {
         TextureAtlasSprite declared = quad.getSprite();
-        if (containsAllUvs(declared, quad.getVertices())) {
+        ResourceLocation declaredLocation = declared.contents().name();
+        String declaredKey = declaredLocation.getNamespace() + ":" + declaredLocation.getPath();
+        if (OXIDIZABLE_TEXTURES.contains(declaredKey)
+            && containsAllUvs(declared, quad.getVertices())) {
             return declared.contents().name();
         }
         for (ResourceLocation location : OXIDIZABLE_LOCATIONS) {

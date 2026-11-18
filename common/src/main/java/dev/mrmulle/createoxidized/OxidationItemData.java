@@ -2,7 +2,13 @@ package dev.mrmulle.createoxidized;
 
 import java.util.Optional;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class OxidationItemData {
@@ -41,6 +47,41 @@ public final class OxidationItemData {
             state.getValue(OxidationProperties.STAGE),
             state.getValue(OxidationProperties.WAXED)
         );
+    }
+
+    public static boolean restoreFromHeldItem(
+        Player player,
+        Level level,
+        BlockPos pos,
+        BlockState placedState
+    ) {
+        if (!OxidationProperties.isOxidizable(placedState)) {
+            return false;
+        }
+
+        for (InteractionHand hand : InteractionHand.values()) {
+            ItemStack stack = player.getItemInHand(hand);
+            if (!(stack.getItem() instanceof BlockItem blockItem)
+                || blockItem.getBlock() != placedState.getBlock()) {
+                continue;
+            }
+
+            Optional<StoredState> stored = read(stack);
+            if (stored.isEmpty()) {
+                continue;
+            }
+
+            StoredState value = stored.get();
+            level.setBlock(
+                pos,
+                placedState
+                    .setValue(OxidationProperties.STAGE, value.stage())
+                    .setValue(OxidationProperties.WAXED, value.waxed()),
+                Block.UPDATE_ALL
+            );
+            return true;
+        }
+        return false;
     }
 
     public interface Adapter {

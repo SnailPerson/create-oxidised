@@ -44,7 +44,7 @@ public final class NeoForgeClientEvents {
     @SubscribeEvent
     public static void modifyBakedModels(ModelEvent.ModifyBakingResult event) {
         event.getModels().replaceAll((location, model) -> {
-            if (!OxidationProperties.isSupportedBlockId(
+            if (!OxidationProperties.isSupportedModelId(
                 location.id().getNamespace(),
                 location.id().getPath()
             )) {

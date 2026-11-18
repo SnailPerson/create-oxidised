@@ -11,7 +11,9 @@ public final class CreativeTabContent {
     }
 
     public static ItemStack icon() {
-        return new ItemStack(block("create:copper_casing"));
+        ItemStack stack = new ItemStack(block("create:copper_casing"));
+        OxidationItemData.write(stack, OxidationStage.OXIDIZED, false);
+        return stack;
     }
 
     public static void populate(CreativeModeTab.Output output) {

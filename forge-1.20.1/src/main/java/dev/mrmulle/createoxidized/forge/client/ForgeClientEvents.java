@@ -45,7 +45,7 @@ public final class ForgeClientEvents {
     @SubscribeEvent
     public static void modifyBakedModels(ModelEvent.ModifyBakingResult event) {
         event.getModels().replaceAll((location, model) -> {
-            if (!OxidationProperties.isSupportedBlockId(location.getNamespace(), location.getPath())) {
+            if (!OxidationProperties.isSupportedModelId(location.getNamespace(), location.getPath())) {
                 return model;
             }
             return model instanceof OxidizedModel ? model : new OxidizedModel(model);

@@ -38,7 +38,6 @@
     { "id": "createdeco:locked_copper_door", "required": false },
     { "id": "createdeco:red_copper_lamp", "required": false },
     { "id": "createdeco:yellow_copper_lamp", "required": false },
-    { "id": "createdieselgenerators:burner", "required": false },
     { "id": "createdieselgenerators:chemical_turret", "required": false },
     { "id": "createdieselgenerators:diesel_engine", "required": false },
     { "id": "createdieselgenerators:distillation_tank", "required": false },
@@ -59,6 +58,20 @@
     { "id": "createdieselgenerators:green_concrete_encased_fluid_pipe", "required": false },
     { "id": "createdieselgenerators:red_concrete_encased_fluid_pipe", "required": false },
     { "id": "createdieselgenerators:black_concrete_encased_fluid_pipe", "required": false },
-    { "id": "create_connected:fluid_vessel", "required": false }
+    { "id": "create_connected:fluid_vessel", "required": false },
+    { "id": "dndecor:copper_boiler", "required": false },
+    { "id": "dndecor:copper_catwalk", "required": false },
+    { "id": "dndecor:copper_cross_bolt", "required": false },
+    { "id": "dndecor:copper_dash_bolt", "required": false },
+    { "id": "dndecor:copper_dot_bolt", "required": false },
+    { "id": "dndecor:copper_flat_bolt", "required": false },
+    { "id": "dndecor:copper_frontlight", "required": false },
+    { "id": "dndecor:copper_lamp", "required": false },
+    { "id": "dndecor:copper_sheet_metal", "required": false },
+    { "id": "dndecor:large_copper_chain", "required": false },
+    { "id": "dndesires:fluid_gauge", "required": false },
+    { "id": "dndesires:fluid_hatch", "required": false },
+    { "id": "dndesires:hydraulic_press", "required": false },
+    { "id": "dndesires:spud_sentry", "required": false }
   ]
 }

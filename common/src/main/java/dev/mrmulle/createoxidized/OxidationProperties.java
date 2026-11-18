@@ -59,7 +59,6 @@ public final class OxidationProperties {
         "createdeco:locked_copper_door",
         "createdeco:red_copper_lamp",
         "createdeco:yellow_copper_lamp",
-        "createdieselgenerators:burner",
         "createdieselgenerators:chemical_turret",
         "createdieselgenerators:diesel_engine",
         "createdieselgenerators:distillation_tank",
@@ -80,9 +79,31 @@ public final class OxidationProperties {
         "createdieselgenerators:green_concrete_encased_fluid_pipe",
         "createdieselgenerators:red_concrete_encased_fluid_pipe",
         "createdieselgenerators:black_concrete_encased_fluid_pipe",
-        "create_connected:fluid_vessel"
+        "create_connected:fluid_vessel",
+        "dndecor:copper_boiler",
+        "dndecor:copper_catwalk",
+        "dndecor:copper_cross_bolt",
+        "dndecor:copper_dash_bolt",
+        "dndecor:copper_dot_bolt",
+        "dndecor:copper_flat_bolt",
+        "dndecor:copper_frontlight",
+        "dndecor:copper_lamp",
+        "dndecor:copper_sheet_metal",
+        "dndecor:large_copper_chain",
+        "dndesires:fluid_gauge",
+        "dndesires:fluid_hatch",
+        "dndesires:hydraulic_press",
+        "dndesires:spud_sentry"
     );
     public static final Set<String> BLOCK_IDS = Set.copyOf(ORDERED_BLOCK_IDS);
+
+    private static final Set<String> EXTRA_MODEL_IDS = Set.of(
+        "dndesires:block/fluid_gauge/needle",
+        "dndesires:block/hydraulic_press/head",
+        "dndesires:block/spud_sentry/base",
+        "dndesires:block/spud_sentry/cannon",
+        "dndesires:block/spud_sentry/gear"
+    );
 
     private static final Set<String> ELIGIBLE_CLASSES = Set.of(
         "com.simibubi.create.content.decoration.encasing.CasingBlock",
@@ -117,13 +138,22 @@ public final class OxidationProperties {
         "com.github.talrey.createdeco.blocks.MeshFenceBlock",
         "com.github.talrey.createdeco.blocks.SupportBlock",
         "com.github.talrey.createdeco.blocks.SupportWedgeBlock",
-        "com.jesz.createdieselgenerators.content.burner.BurnerBlock",
         "com.jesz.createdieselgenerators.content.turret.ChemicalTurretBlock",
         "com.jesz.createdieselgenerators.content.diesel_engine.normal.DieselEngineBlock",
         "com.jesz.createdieselgenerators.content.distillation.DistillationTankBlock",
         "com.jesz.createdieselgenerators.content.pumpjack.PumpjackHoleBlock",
         "com.jesz.createdieselgenerators.content.concrete.ConcreteEncasedFluidPipeBlock",
-        "com.hlysine.create_connected.content.fluidvessel.FluidVesselBlock"
+        "com.hlysine.create_connected.content.fluidvessel.FluidVesselBlock",
+        "dev.lopyluna.dndecor.content.blocks.boiler.BoilerBlock",
+        "dev.lopyluna.dndecor.content.blocks.catwalk.CatwalkBlock",
+        "dev.lopyluna.dndecor.content.blocks.bolt.BoltBlock",
+        "dev.lopyluna.dndecor.content.blocks.frontlight.FrontlightBlock",
+        "dev.lopyluna.dndecor.content.blocks.lamp.LampBlock",
+        "dev.lopyluna.dndecor.content.blocks.LargeChain",
+        "dev.lopyluna.dndesires.content.blocks.logistics.fluid_gauge.FluidGaugeBlock",
+        "dev.lopyluna.dndesires.content.blocks.logistics.fluid_hatch.FluidHatchBlock",
+        "dev.lopyluna.dndesires.content.blocks.kinetics.hydraulic_press.HydraulicPressBlock",
+        "dev.lopyluna.dndesires.content.blocks.kinetics.spud_sentry.SpudSentryBlock"
     );
 
     private OxidationProperties() {
@@ -147,6 +177,11 @@ public final class OxidationProperties {
 
     public static boolean isSupportedBlockId(String namespace, String path) {
         return BLOCK_IDS.contains(namespace + ":" + path);
+    }
+
+    public static boolean isSupportedModelId(String namespace, String path) {
+        String id = namespace + ":" + path;
+        return BLOCK_IDS.contains(id) || EXTRA_MODEL_IDS.contains(id);
     }
 
     public static boolean isOxidizable(BlockState state) {

@@ -104,10 +104,18 @@ public final class CreateOxidizedForge {
             return;
         }
 
+        OxidationItemData.restoreFromHeldItem(
+            player,
+            level,
+            event.getPos(),
+            event.getPlacedBlock()
+        );
+
         ItemStack stack = player.getOffhandItem();
         Treatment treatment = WaxedUpCompat.treatment(stack);
-        if (!WaxedUpCompat.canTreat(event.getPlacedBlock(), treatment)
-            || !WaxedUpCompat.treat(level, event.getPos(), event.getPlacedBlock(), treatment)) {
+        BlockState placedState = level.getBlockState(event.getPos());
+        if (!WaxedUpCompat.canTreat(placedState, treatment)
+            || !WaxedUpCompat.treat(level, event.getPos(), placedState, treatment)) {
             return;
         }
 
